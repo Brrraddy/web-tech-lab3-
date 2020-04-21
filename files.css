@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    /* background-color: #1a1a1a; */
+    background-color: rgb(231,220,234);
+}
+
+.block {
+position: absolute;
+top: 50%;
+right: 50%;
+margin-top: -350px;
+margin-left: -350px;
+}
+
+.cal {
+border: 1px solid #ccc;
+color: #333;
+background: #F6F6F6;
+font-family: 'Montserrat', sans-serif;
+font-size: 14px;
+text-align: center;
+}
+
+.calend {
+font-family: 'Montserrat', sans-serif;
+font-size: 14px;
+text-align: center;
+font-weight: bold;
+}
+
+.nav {
+font-family: 'Montserrat', sans-serif;
+font-size: 16px;
+font-weight: bold;
+}
+
+.dat {
+    font-family: 'Montserrat', sans-serif;
+font-size: 16px;
+font-weight: bold;
+}
