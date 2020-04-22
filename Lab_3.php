@@ -16,13 +16,13 @@
 		//Way of script
 		$self = $_SERVER['PHP_SELF'];
 
-		//Check data in URL	
+		//Check data in URL
 		function set(&$supp,$name,$arg = 'm')
 		{
 			if(isset($_GET[$name])) 
 				$supp = $_GET[$name];
 			else
-				if ($name != 'num')
+				if ($name != 'course')
 					$supp = date($arg);
 				else
 					$supp = 1;
@@ -30,7 +30,7 @@
 		
 		set($month,'month','m');		
 		set($year,'year','Y');
-		set($num,'num');							
+		set($course,'course');
 				
 		$Month_r = array(
 		"1" => "Январь",
@@ -48,11 +48,11 @@
 
 		$first = mktime(0, 0, 0, $month, 1, $year);
 		$max_days = date('t', $first);
-		$date = getdate($first); //возращает колво дней в указ месяце
+		$date = getdate($first); //days in our actual month
 		$month = $date['mon'];
 		$year = $date['year'];
 			
-		//Creating html part
+		//html part
 		$calendar = "
 		<div class=\"block\">
 		<table width='390px' height='280px' style='border: 1px solid #f8f7f2';>
@@ -72,11 +72,10 @@
 		</tr>
 		<tr>"; 
 
-		//Name of html class
+
 		$class = "";
 		$weekday = $date['wday'];
 
-		//In format 
 		$weekday = $weekday-1; 
 		if($weekday == -1) $weekday=6;
 		$day = 1;
@@ -85,7 +84,7 @@
 		if($weekday > 0) 
 			$calendar .= "<td colspan='$weekday'> </td>";
 		
-		//Show with color
+		//Show special days with color
 		while($day <= $max_days)
 		{
 			//On new string
@@ -96,35 +95,35 @@
 	
 			//Check today's date
 			if($day == date('j') && $month == date('n') && $year == date('Y')) 
-				$class = "calend";
+				$class = "special";
 			else 																		
 				$class = "cal";   														
-			
-			if(($num == 1) || ($num == 2)) {			
+			//special days are session or vacation
+			if(($course == 1) || ($course == 2)) {
 				if(($month == 1) || (($month == 2) && ($day < 9)) || 
 					($month == 7) || ($month == 8) || (($month == 6) && ($day > 10)))	 {
-						$class = "calend"; 
+						$class = "special";
 						$special_days='style="color: cadetblue" ';
 					}					
 				else 
 					$special_days='';
 			}
 			
-			if($num == 3) {		
+			if($course == 3) {
 				if((($month == 12) && ($day > 21)) || (($month == 1) && ($day < 26)) || (($month == 5) && ($day > 18)) || ($month == 6)
 					|| ($month == 7) || ($month == 8)) {			 
-						$class = "calend"; 
-						$special_days='style="color: cadetblue" ';
+						$class = "special";
+						$special_days='style="color: blue" ';
 					}	
 				else 
 					$special_days='';
 			}
 			
-			if($num == 4) {		
+			if($course == 4) {
 				if((($month == 12) && ($day > 21)) || (($month == 1) && ($day < 26)) || (($month == 3) && ($day > 15)) 
 					|| ($month == 4) || ($month == 5) || ($month == 6))	{		 
-						$class = "calend"; 
-						$special_days='style="color: cadetblue" ';
+						$class = "special";
+						$special_days='style="color: orange" ';
 					}	
 				else 
 					$special_days='';
@@ -202,9 +201,9 @@
 		echo "</select></p>";
 		
 		//Choose a course
-		echo "<p>Курс:<select name='num'>";
+		echo "<p>Курс:<select name='course'>";
 		for($i=1; $i<5; $i++) {
-			$selected = ($num == $i ? "selected = 'selected'" : '');
+			$selected = ($course == $i ? "selected = 'selected'" : '');
 			echo "<option value=\"".($i)."\"$selected>".$i."</option>";
 		}
 		echo "</select></p>";
@@ -226,7 +225,7 @@
 
 		//Link on today's data
 		if($month != date('m') || $year != date('Y'))
-			echo "<a style='float: left; margin-left: 10px; font-size: 12px; padding-top: 5px;' href='".$self."?month=".date('m')."&year=".date('Y')."&num=".$num."'>Перейти к текущей дате</a>";
+			echo "<a style='float: left; margin-left: 10px; font-size: 12px; padding-top: 5px;' href='".$self."?month=".date('m')."&year=".date('Y')."&num=".$course."'>Перейти к текущей дате</a>";
 		echo "</div>"; 
 	?>
     </div>
